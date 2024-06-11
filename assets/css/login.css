@@ -1,0 +1,80 @@
+@import url('/assets/fonts/fonts-stylesheet.css');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background: url("/assets/img/tweet.jpeg");
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    
+}
+.login{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    width: 60%;
+    margin-top: 120px;
+}
+
+.heading h2 {
+    text-align: center;
+    color: white;
+    align-items: center;
+}
+
+.form-wrapper{
+    display: inline-grid;
+    align-items: center;
+    background-color: aliceblue;
+    justify-content: center;
+    border-radius: 8px;
+    /* border: 2px solid #1ca1f1; */
+    padding:    50px;
+}
+.form-wrapper form {
+    width: 50vw;
+    max-width: 900px;
+    min-width: 250px;
+    text-align: center;
+}
+.btn{
+    margin-top: 13px;
+    padding: 10px 50px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #1ca1f1;
+    transition: .3s linear;
+    cursor: pointer;
+
+}
+input[type=text], input[type=password], input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    border: 1px solid #1ca1f1;
+    border-radius: 5px;
+}
+h3.form-heading {
+    text-align: center;
+}
+.login-page, .registration-page {
+    margin-top: 20px;
+    text-align: center; 
+}
+@media (max-width: 767px) { 
+    .login {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 80px;
+    }
+}

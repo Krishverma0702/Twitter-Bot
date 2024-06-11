@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style1.css">
+    <title>Simple Chatbot</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="chat-area">
+            <div class="chatbot-message user-message hidden">
+                <div class="avatar"></div>
+                <div class="bubble"></div>
+            </div>
+            <div id="chat-history" class="chat-history">
+                <div class="chatbot-message chatbot-start-message hidden">
+                    Hello, how can I assist you today?
+                </div>
+            </div>
+            <form id="chat-form">
+                <input type="text" id="input-message" placeholder="Type your message here...">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatHistory = document.getElementById('chat-history');
+        const inputMessage = document.getElementById('input-message');
+
+
+
+        // Mock data
+        const questionsAndAnswers = [{
+            question: 'Hello',
+            answer: 'Hi,I am ready to suggest you tweet ideas!!'
+        }, {
+            question: 'Hi',
+            answer: 'Hello,I am ready to suggest you tweet ideas!!'
+        }, {
+            question: 'Who are you?',
+            answer: 'Hii.. I am TweeCraft'
+        }, {
+            question: 'What do you do?',
+            answer: 'I can provide predefined answers based on the user questions.'
+        }, {
+            question: 'How can I add custom data to you?',
+            answer: 'You can add custom data by storing it in a database on the server. You can use SQL queries to manage the data in the database.'
+        }, {
+            question: 'Suggest me some tweets about Motivation',
+            answer: '1.Small steps every day lead to big results. Do not give up on your dreams!#MotivationMonday'
+        }, {
+            question: 'something more about Motivation',
+            answer: '1. What keeps you motivated? Share your tips in the comments! #MotivationSquad'
+        }, {
+            question: 'Suggest me some tweets about lifestyle',
+            answer: 'Started a new yoga routine this week! Feeling energized and ready to tackle the day. #HealthyHabits' + '2. Loving my new bullet journal! Its helping me stay organized and focused. #BulletJournaling '
+        }];
+
+        chatForm.addEventListener('submit', async(event) => {
+            event.preventDefault();
+
+            const userMessage = inputMessage.value.trim();
+            if (!userMessage) {
+                return;
+            }
+
+            const chatbotMessage = document.createElement('div');
+            chatbotMessage.classList.add('chatbot-message', 'bot-message');
+            chatbotMessage.innerHTML = `
+    <div class="avatar"></div>
+    <div class="bubble">${userMessage}</div>
+  `;
+            chatHistory.appendChild(chatbotMessage);
+
+            for (const {
+                    question,
+                    answer
+                }
+                of questionsAndAnswers) {
+                if (userMessage.toLowerCase() === question.toLowerCase()) {
+                    const chatbotMessage = document.createElement('div');
+                    chatbotMessage.classList.add('chatbot-message', 'user-message');
+                    chatbotMessage.innerHTML = `
+              <div class="avatar"></div>
+              <div class="bubble">${answer}</div>
+              
+            `;
+                    chatHistory.appendChild(chatbotMessage);
+
+
+                    // Create a "tweet" button
+                    const tweetButton = document.createElement('button');
+                    tweetButton.classList.add('tweet-button');
+                    tweetButton.textContent = 'Tweet';
+                    tweetButton.addEventListener('click', () => {
+                        // Store the chatbot response in localStorage
+                        localStorage.setItem('chatbot-message', chatbotMessage.textContent);
+
+                        // Redirect to the other page
+                        window.location.href = '/Main/index.html';
+                    });
+                    chatbotMessage.appendChild(tweetButton);
+
+
+
+                    // Scroll to the bottom of the chat history
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                    break;
+                }
+            }
+
+            // Clear the input message
+            inputMessage.value = '';
+        });
+
+        chatHistory.addEventListener('scroll', () => {
+            const historyHeight = chatHistory.scrollHeight;
+            const historyBottom = chatHistory.offsetTop + historyHeight - chatHistory.clientHeight;
+
+            if (window.pageYOffset >= historyBottom) {
+                chatHistory.classList.add('reached-bottom');
+            } else {
+                chatHistory.classList.remove('reached-bottom');
+            }
+        });
+
+        inputMessage.addEventListener('keypress', async(event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+
+                const userMessage = inputMessage.value.trim();
+                if (!userMessage) {
+                    return;
+                }
+
+                const chatbotMessage = document.createElement('div');
+                chatbotMessage.classList.add('chatbot-message', 'bot-message');
+                chatbotMessage.innerHTML = `
+        <div class="avatar"></div>
+        <div class="bubble">${userMessage}</div>
+      `;
+                chatHistory.appendChild(chatbotMessage);
+
+                for (const {
+                        question,
+                        answer
+                    }
+                    of questionsAndAnswers) {
+                    if (userMessage.toLowerCase() === question.toLowerCase()) {
+                        const chatbotMessage = document.createElement('div');
+                        chatbotMessage.classList.add('chatbot-message', 'user-message');
+                        chatbotMessage.innerHTML = `
+              <div class="avatar"></div>
+              <div class="bubble">${answer}</div>
+              
+            `;
+                        chatHistory.appendChild(chatbotMessage);
+
+                        // Create a "tweet" button
+                        const tweetButton = document.createElement('button');
+                        tweetButton.classList.add('tweet-button');
+                        tweetButton.textContent = 'Tweet';
+                        tweetButton.addEventListener('click', () => {
+                            // Store the chatbot response in localStorage
+                            localStorage.setItem('chatbot-message', chatbotMessage.textContent);
+
+                            // Redirect to the other page
+                            window.location.href = '/Main/index.html';
+                        });
+                        chatbotMessage.appendChild(tweetButton);
+
+
+
+
+                        // Scroll to the bottom of the chat history
+                        chatHistory.scrollTop = chatHistory.scrollHeight;
+
+
+                        break;
+                    }
+
+                }
+                // Clear the input message
+                inputMessage.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
